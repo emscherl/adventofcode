@@ -1,24 +1,35 @@
 with open('data.txt') as input:
     lines = [line.rstrip() for line in input]
 
-count = 0
-line = 1
-trees = 0
-
-
-def tree_slope(x, y, lines):
+def tree_slope(x, y, tree_list):
     count = 0
-    line = 1
+    line = 0
     trees = 0
 
-    for i in lines:
-        if line % y == 0:
-            pass
-        print(line, count, i[count])
-        if i[count] == '#':
+    while line < len(tree_list):
+        f = tree_list[line]
+        if f[count] == '#':
             trees += 1
-        count += 3
-        if count >= len(i):
-            count -= (len(i))
-        line += 1
-print(trees)
+        line += y
+        count += x
+        if count >= len(f):
+            count -= len(f)
+
+    return trees
+
+trees_1 = tree_slope(1, 1, lines)
+print(trees_1)
+
+trees_2 = tree_slope(3, 1, lines)
+print(trees_2)
+
+trees_3 = tree_slope(5, 1, lines)
+print(trees_3)
+
+trees_4 = tree_slope(7, 1, lines)
+print(trees_4)
+
+trees_5 = tree_slope(1, 2, lines)
+print(trees_5)
+
+print(trees_1 * trees_2 * trees_3 * trees_4 * trees_5)
