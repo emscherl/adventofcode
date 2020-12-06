@@ -32,4 +32,18 @@ for s in seats:
 
     id_lst.append(seat_id(r, c))
 
-print(max(id_lst))
+print(id_lst)
+
+all_ids = []
+
+for r in range(127):
+    for c in range(8):
+        all_ids.append(seat_id(r, c))
+
+print(all_ids)
+
+ls = [x for x in all_ids if x not in id_lst]
+print(ls)
+
+id = [x for x in ls if x-1 in id_lst and x+1 in id_lst]
+print(id)
