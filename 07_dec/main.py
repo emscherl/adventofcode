@@ -1,5 +1,3 @@
-from functools import reduce
-
 with open('data.txt') as f:
     rules = [line.strip('\n.').replace('contain ', '').replace('bags', 'bag').replace(',', '')
              for line in f]
@@ -9,26 +7,15 @@ bag_clr = 'shiny gold'
 
 for rule in rules:
     rule = [r.strip() for r in rule.split('bag')][:-1]
-    color = rule[0]
+    color_primary = rule[0]
     content = [r.split(' ', 1)[1].replace('other', '') for r in rule[1:]]
-    rule_dict[color] = content
-print(rule_dict)
+    rule_dict[color_primary] = content
 
-clrs = []
+def shiny_gold(color):
+    if color == bag_clr:
+        return True
+    else:
+        if color != '':
+            return any(shiny_gold(child) for child in rule_dict[color])
 
-for color in rule_dict:
-    if bag_clr in rule_dict[color]:
-        clrs.append(color)
-        for c in rule_dict:
-            if color in rule_dict[c]:
-                clrs.append(c)
-
-for i in range(7):
-    for color in rule_dict:
-        for clr in clrs:
-            if clr in rule_dict[color]:
-                clrs.append(color)
-    i += 1
-
-clrs = set(clrs)
-print(len(clrs))
+print(sum(shiny_gold(color) for color in rule_dict.keys())-1)
